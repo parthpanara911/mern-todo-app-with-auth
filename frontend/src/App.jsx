@@ -1,24 +1,44 @@
-
-import './style/app.css';
-import NavBar from './components/navbar';
-import { Routes, Route } from 'react-router-dom';
-import AddTask from './components/AddTask';
-import List from './components/List';
-import UpdateTask from './components/UpdateTask';
-import SignUp from './components/Signup';
-import Login from './components/Login';
-import Protected from './components/Protected';
+import "./style/App.css";
+import NavBar from "./components/NavBar.jsx";
+import { Routes, Route } from "react-router-dom";
+import AddTask from "./pages/AddTask.jsx";
+import List from "./pages/List.jsx";
+import UpdateTask from "./pages/UpdateTask.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import Login from "./pages/Login.jsx";
+import Protected from "./components/Protected.jsx";
 
 function App() {
   return (
     <>
       <NavBar />
       <Routes>
-        <Route path='/' element={<Protected><List /></Protected>} />
-        <Route path='/add' element={<Protected><AddTask /></Protected>} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/update/:id' element={<UpdateTask />} />
+        <Route
+          path="/"
+          element={
+            <Protected>
+              <List />
+            </Protected>
+          }
+        />
+        <Route
+          path="/add"
+          element={
+            <Protected>
+              <AddTask />
+            </Protected>
+          }
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/update/:id"
+          element={
+            <Protected>
+              <UpdateTask />
+            </Protected>
+          }
+        />
       </Routes>
     </>
   );
