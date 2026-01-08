@@ -1,12 +1,12 @@
+import { Routes, Route } from "react-router-dom";
 import "./style/App.css";
 import NavBar from "./components/NavBar.jsx";
-import { Routes, Route } from "react-router-dom";
+import Protected from "./components/Protected.jsx";
 import AddTask from "./pages/AddTask.jsx";
 import List from "./pages/List.jsx";
 import UpdateTask from "./pages/UpdateTask.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
-import Protected from "./components/Protected.jsx";
 
 function App() {
   return (

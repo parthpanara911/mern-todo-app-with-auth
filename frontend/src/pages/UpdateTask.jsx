@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../style/addtask.css";
-import { taskApi } from "../services/api/taskApi.js";
+import { todoApi } from "../services/api/todoApi.js";
 
 export default function UpdateTask() {
   const [taskData, setTaskData] = useState({});
@@ -14,7 +14,7 @@ export default function UpdateTask() {
 
   const getTask = async (taskId) => {
     try {
-      const task = await taskApi.getTask(taskId);
+      const task = await todoApi.getTask(taskId);
       if (task.success && task.result) {
         setTaskData(task.result);
       }
@@ -30,7 +30,7 @@ export default function UpdateTask() {
     }
 
     try {
-      const task = await taskApi.updateTask(taskData);
+      const task = await todoApi.updateTask(taskData);
       if (task.success) {
         navigate("/");
       } else {

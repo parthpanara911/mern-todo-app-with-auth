@@ -5,11 +5,11 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localho
 export const API_ENDPOINTS = {
   LOGIN: "/login",
   SIGNUP: "/signup",
-  TASKS: "/tasks",
-  TASK: (id) => `/task/${id}`,
-  ADD_TASK: "/add-task",
-  UPDATE_TASK: "/update-task",
-  DELETE_TASK: (id) => `/delete/${id}`,
-  DELETE_MULTIPLE: "/delete-multiple",
+  LOGOUT: "/logout",
+  TODOS: "/todos",
+  TODO: (id) => `/todos/${id}`,
+  // CREATE: "/todos",
+  // UPDATE: "/todos",
+  // DELETE: (id) => `/todos/${id}`,
+  // DELETE_MULTIPLE: "/todos",
 };
-

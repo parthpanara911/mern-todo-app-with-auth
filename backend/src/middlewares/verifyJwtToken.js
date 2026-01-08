@@ -6,13 +6,16 @@ export function verifyJwtToken(req, res, next) {
     const token = req.cookies["token"];
     jwt.verify(token, JWT_SECRET, (error, decoded) => {
         if (error) {
-            return res.send({
-                msg: "invalid token",
+            return res.status(401).json({
                 success: false,
+                error: "Invalid or expired token"
             });
         }
+        req.user = {
+            id: decoded.userId || decoded.id,
+            email: decoded.email
+        };
+
         next();
     });
 }
-
-

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter>  {/* Enables client-side routing */}
       <App />
     </BrowserRouter>
   </StrictMode>,

@@ -1,41 +1,27 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../style/list.css";
-import { taskApi } from "../services/api/taskApi.js";
+import { todoApi } from "../services/api/todoApi.js";
 
 export default function List() {
   const [taskData, setTaskData] = useState([]);
   const [selectedTask, setSelectedTask] = useState([]);
 
   useEffect(() => {
-    getListData();
+    getListData(); // Called when component inserted into DOM 
   }, []);
 
   const getListData = async () => {
-    try {
-      const list = await taskApi.getTasks();
-      if (list.success) {
-        setTaskData(list.result);
-      } else {
-        alert("Try after sometime");
-      }
-    } catch (error) {
-      console.error("Get tasks error:", error);
-      alert("Try after sometime");
+    const response = await todoApi.getAll();
+    if (response.success) {
+      setTaskData(response.data);
     }
   };
 
   const deleteTask = async (id) => {
-    try {
-      const item = await taskApi.deleteTask(id);
-      if (item.success) {
-        getListData();
-      } else {
-        alert("Try after sometime");
-      }
-    } catch (error) {
-      console.error("Delete task error:", error);
-      alert("Try after sometime");
+    const response = await todoApi.delete(id);
+    if (response.success) {
+      getListData();
     }
   };
 
@@ -62,18 +48,10 @@ export default function List() {
       alert("Please select at least one task to delete");
       return;
     }
-
-    try {
-      const item = await taskApi.deleteMultipleTasks(selectedTask);
-      if (item.success) {
-        getListData();
-        setSelectedTask([]);
-      } else {
-        alert("Try after sometime");
-      }
-    } catch (error) {
-      console.error("Delete multiple tasks error:", error);
-      alert("Try after sometime");
+    const response = await todoApi.deleteMultiple(selectedTask);
+    if (response.success) {
+      getListData();   // Refresh list
+      setSelectedTask([]); // Clear selection
     }
   };
 

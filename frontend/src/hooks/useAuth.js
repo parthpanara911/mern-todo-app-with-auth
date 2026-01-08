@@ -21,10 +21,10 @@ export const useAuth = () => {
   }, []);
 
   const loginUser = (email, token) => {
-    document.cookie = `token=${token}`;
-    localStorage.setItem("login", email);
-    window.dispatchEvent(new Event("localStorage-change"));
-    setLogin(email);
+    document.cookie = `token=${token}`; // Sets token in cookies
+    localStorage.setItem("login", email); // Saves login state
+    window.dispatchEvent(new Event("localStorage-change"));  // Notifies components
+    setLogin(email); // Updates react state
   };
 
   const logout = () => {
