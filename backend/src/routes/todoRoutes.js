@@ -12,11 +12,11 @@ import { validateTodo } from "../middlewares/validate.js";
 
 const router = Router();
 
-router.get("/api/todos", verifyJwtToken, getTodos);
-router.post("/api/todos", verifyJwtToken, validateTodo, createTodo);
-router.get("/api/todos/:id", verifyJwtToken, getTodo);
-router.put("/api/todos/:id", verifyJwtToken, validateTodo, updateTodo);
-router.delete("/api/todos/:id", verifyJwtToken, deleteTodo);
-router.delete("/api/todos", verifyJwtToken, deleteTodos);
+router.get("/", verifyJwtToken, getTodos);
+router.post("/", verifyJwtToken, validateTodo, createTodo);
+router.delete("/bulk", verifyJwtToken, deleteTodos);
+router.get("/:id", verifyJwtToken, getTodo);
+router.put("/:id", verifyJwtToken, validateTodo, updateTodo);
+router.delete("/:id", verifyJwtToken, deleteTodo);
 
 export default router;

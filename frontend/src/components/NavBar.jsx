@@ -15,7 +15,7 @@ function NavBar() {
               <Link to="/">List</Link>
             </li>
             <li>
-              <Link to="/add">Add Task</Link>
+              <Link to="/add">Add Todo</Link>
             </li>
             <li>
               <Link onClick={logout}>Logout</Link>

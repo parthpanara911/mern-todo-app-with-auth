@@ -14,20 +14,19 @@ async function getTodosCollection() {
     return await db.collection(collectionName);
 }
 
-export async function createTodoService(userId, payload) {
+export async function createTodoService(payload) {
     const collection = await getTodosCollection();
     const todoWithUser = {
         ...payload,
-        userId,
         createdAt: new Date(),
         updatedAt: new Date(),
     };
     return await insertTodo(collection, todoWithUser);
 }
 
-export async function getTodosService(userId) {
+export async function getTodosService() {
     const collection = await getTodosCollection();
-    return await listTodos(collection, userId);
+    return await listTodos(collection);
 }
 
 export async function getTodoService(id) {

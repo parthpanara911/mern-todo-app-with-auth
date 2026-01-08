@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-/**
- * Custom hook for authentication state management
- * @returns {Object} Auth state and methods
- */
 export const useAuth = () => {
   const [login, setLogin] = useState(localStorage.getItem("login"));
   const navigate = useNavigate();
@@ -44,4 +40,3 @@ export const useAuth = () => {
     logout,
   };
 };
-

@@ -2,21 +2,21 @@ import { API_BASE_URL, API_ENDPOINTS } from "../../constants/config.js";
 
 export const todoApi = {
   getAll: async () => {
-    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.TASKS}`, {
+    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.TODOS}`, {
       credentials: "include",
     });
     return await response.json();
   },
 
   getById: async (id) => {
-    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.TASK(id)}`, {
+    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.TODO(id)}`, {
       credentials: "include",
     });
     return await response.json();
   },
 
   create: async (todoData) => {
-    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.ADD_TASK}`, {
+    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.CREATE}`, {
       method: "POST",
       body: JSON.stringify(todoData),
       credentials: "include",
@@ -27,9 +27,9 @@ export const todoApi = {
     return await response.json();
   },
 
-  update: async (todoData) => {
+  update: async (id, todoData) => {
     const response = await fetch(
-      `${API_BASE_URL}${API_ENDPOINTS.UPDATE_TASK}`,
+      `${API_BASE_URL}${API_ENDPOINTS.UPDATE(id)}`,
       {
         method: "PUT",
         body: JSON.stringify(todoData),
@@ -44,7 +44,7 @@ export const todoApi = {
 
   delete: async (id) => {
     const response = await fetch(
-      `${API_BASE_URL}${API_ENDPOINTS.DELETE_TASK(id)}`,
+      `${API_BASE_URL}${API_ENDPOINTS.DELETE(id)}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -59,7 +59,7 @@ export const todoApi = {
       {
         method: "DELETE",
         credentials: "include",
-        body: JSON.stringify(ids),   // Sends array of IDs
+        body: JSON.stringify({ ids }), // Sends array of IDs
         headers: {
           "Content-Type": "application/json",
         },

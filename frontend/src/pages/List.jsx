@@ -4,8 +4,8 @@ import "../style/list.css";
 import { todoApi } from "../services/api/todoApi.js";
 
 export default function List() {
-  const [taskData, setTaskData] = useState([]);
-  const [selectedTask, setSelectedTask] = useState([]);
+  const [todoData, setTodoData] = useState([]);
+  const [selectedTodo, setSelectedTodo] = useState([]);
 
   useEffect(() => {
     getListData(); // Called when component inserted into DOM 
@@ -14,44 +14,58 @@ export default function List() {
   const getListData = async () => {
     const response = await todoApi.getAll();
     if (response.success) {
-      setTaskData(response.data);
+      setTodoData(response.data);
     }
   };
 
-  const deleteTask = async (id) => {
-    const response = await todoApi.delete(id);
-    if (response.success) {
-      getListData();
+  const deleteTodo = async (id) => {
+    try {
+      const response = await todoApi.delete(id);
+      if (response.success) {
+        getListData();
+      } else {
+        alert(response.error || "Failed to delete todo");
+      }
+    } catch (error) {
+      console.error("Delete todo error:", error);
+      alert("Failed to delete todo");
     }
   };
 
   const selectAll = (event) => {
     if (event.target.checked) {
-      const items = taskData.map((item) => item._id);
-      setSelectedTask(items);
+      const items = todoData.map((item) => item._id);
+      setSelectedTodo(items);
     } else {
-      setSelectedTask([]);
+      setSelectedTodo([]);
     }
   };
 
   const selectSingleItem = (id) => {
-    if (selectedTask.includes(id)) {
-      const items = selectedTask.filter((item) => item !== id);
-      setSelectedTask(items);
+    if (selectedTodo.includes(id)) {
+      const items = selectedTodo.filter((item) => item !== id);
+      setSelectedTodo(items);
     } else {
-      setSelectedTask([...selectedTask, id]);
+      setSelectedTodo([...selectedTodo, id]);
     }
   };
 
   const deleteMultiple = async () => {
-    if (selectedTask.length === 0) {
+    if (selectedTodo.length === 0) {
       alert("Please select at least one task to delete");
       return;
     }
-    const response = await todoApi.deleteMultiple(selectedTask);
-    if (response.success) {
-      getListData();   // Refresh list
-      setSelectedTask([]); // Clear selection
+    try {
+      const response = await todoApi.deleteMultiple(selectedTodo);
+      if (response.success) {
+        getListData();   // Refresh list
+        setSelectedTodo([]); // Clear selection
+      } else {
+        alert(response.error || "Failed to delete todos");
+      }
+    } catch (error) {
+      console.error("Delete multiple todos error:", error);
+      alert("Failed to delete todos");
     }
   };
 
@@ -70,13 +84,13 @@ export default function List() {
         <li className="list-header">Description</li>
         <li className="list-header">Action</li>
 
-        {taskData &&
-          taskData.map((item, index) => (
+        {todoData &&
+          todoData.map((item, index) => (
             <Fragment key={item._id}>
               <li className="list-item">
                 <input
                   onChange={() => selectSingleItem(item._id)}
-                  checked={selectedTask.includes(item._id)}
+                  checked={selectedTodo.includes(item._id)}
                   type="checkbox"
                 />
               </li>
@@ -85,7 +99,7 @@ export default function List() {
               <li className="list-item">{item.description}</li>
               <li className="list-item">
                 <button
-                  onClick={() => deleteTask(item._id)}
+                  onClick={() => deleteTodo(item._id)}
                   className="delete-item"
                 >
                   Delete

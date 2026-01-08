@@ -1,55 +1,55 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../style/addtask.css";
-import { todoApi } from "../services/api/todoApi";
+import "../style/addtodo.css";
+import { todoApi } from "../services/api/todoApi.js";
 
-export default function AddTask() {
-  const [taskData, setTaskData] = useState({});
+export default function AddTodo() {
+  const [todoData, setTodoData] = useState({});
   const navigate = useNavigate();
 
-  const handleAddTask = async () => {
-    if (!taskData.title || !taskData.description) {
+  const handleAddTodo = async () => {
+    if (!todoData.title || !todoData.description) {
       alert("Please fill in all fields");
       return;
     }
 
     try {
-      const result = await todoApi.createTask(taskData);
+      const result = await todoApi.create(todoData);
       if (result.success) {
         navigate("/");
       } else {
         alert("Try after sometime");
       }
     } catch (error) {
-      console.error("Add task error:", error);
+      console.error("Add todo error:", error);
       alert("Try after sometime");
     }
   };
 
   return (
     <div className="container">
-      <h1>Add New Task</h1>
+      <h1>Add New Todo</h1>
 
       <label htmlFor="title">Title</label>
       <input
         onChange={(event) =>
-          setTaskData({ ...taskData, title: event.target.value })
+          setTodoData({ ...todoData, title: event.target.value })
         }
         type="text"
         name="title"
-        placeholder="Enter task title"
+        placeholder="Enter todo title"
       />
       <label htmlFor="description">Description</label>
       <textarea
         onChange={(event) =>
-          setTaskData({ ...taskData, description: event.target.value })
+          setTodoData({ ...todoData, description: event.target.value })
         }
         rows={4}
         name="description"
-        placeholder="Enter task description"
+        placeholder="Enter todo description"
       />
-      <button onClick={handleAddTask} className="submit">
-        Add New Task
+      <button onClick={handleAddTodo} className="submit">
+        Add New Todo
       </button>
     </div>
   );

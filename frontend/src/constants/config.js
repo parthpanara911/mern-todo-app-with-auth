@@ -3,13 +3,12 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localho
 
 // API Endpoints
 export const API_ENDPOINTS = {
-  LOGIN: "/login",
-  SIGNUP: "/signup",
-  LOGOUT: "/logout",
+  LOGIN: "/auth/login",
+  SIGNUP: "/auth/signup",
   TODOS: "/todos",
   TODO: (id) => `/todos/${id}`,
-  // CREATE: "/todos",
-  // UPDATE: "/todos",
-  // DELETE: (id) => `/todos/${id}`,
-  // DELETE_MULTIPLE: "/todos",
+  CREATE: "/todos",
+  UPDATE: (id) => `/todos/${id}`,
+  DELETE: (id) => `/todos/${id}`,
+  DELETE_MULTIPLE: "/todos/bulk",
 };

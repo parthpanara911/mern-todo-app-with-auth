@@ -16,10 +16,10 @@ app.use(
 );
 app.use(cookieParser()); // Parses cookies for jwt
 
-app.use(authRoutes);
-app.use(todoRoutes);
+app.use('/auth', authRoutes);
+app.use('/todos', todoRoutes);
 
-app.use("*", (req, res) => {
+app.use((req, res) => {
     res.status(404).json({
         success: false,
         error: `Route ${req.originalUrl} not found`
