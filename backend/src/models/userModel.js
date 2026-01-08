@@ -1,5 +1,10 @@
 import { USERS_COLLECTION } from "../config/env.js";
 
+export async function findUserByEmail(db, email) {
+    const collection = await db.collection(USERS_COLLECTION);
+    return await collection.findOne({ email });
+}
+
 export async function findUserByEmailAndPassword(db, { email, password }) {
     const collection = await db.collection(USERS_COLLECTION);
     return await collection.findOne({ email, password });

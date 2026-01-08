@@ -10,6 +10,10 @@ export default function Login() {
   const { isAuthenticated, loginUser } = useAuth();
 
   useEffect(() => {
+    document.title = "Login - Todo App";
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
     }
@@ -27,11 +31,11 @@ export default function Login() {
         loginUser(userData.email, result.token);
         navigate("/");
       } else {
-        alert(result.msg || "Try after sometime");
+        alert(result.msg || "Invalid email or password");
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Try after sometime");
+      alert("Login failed");
     }
   };
 

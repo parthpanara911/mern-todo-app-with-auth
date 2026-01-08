@@ -14,27 +14,28 @@ async function getTodosCollection() {
     return await db.collection(collectionName);
 }
 
-export async function createTodoService(payload) {
+export async function createTodoService(userId, payload) {
     const collection = await getTodosCollection();
     const todoWithUser = {
         ...payload,
+        userId: String(userId),
         createdAt: new Date(),
         updatedAt: new Date(),
     };
     return await insertTodo(collection, todoWithUser);
 }
 
-export async function getTodosService() {
+export async function getTodosService(userId) {
     const collection = await getTodosCollection();
-    return await listTodos(collection);
+    return await listTodos(collection, String(userId));
 }
 
-export async function getTodoService(id) {
+export async function getTodoService(userId, id) {
     const collection = await getTodosCollection();
-    return await findTodoById(collection, new ObjectId(id));
+    return await findTodoById(collection, String(userId), new ObjectId(id));
 }
 
-export async function updateTodoService(id, payload) {
+export async function updateTodoService(userId, id, payload) {
     const collection = await getTodosCollection();
     const update = {
         $set: {
@@ -42,16 +43,16 @@ export async function updateTodoService(id, payload) {
             updatedAt: new Date()
         }
     };
-    return await updateTodoById(collection, new ObjectId(id), update);
+    return await updateTodoById(collection, String(userId), new ObjectId(id), update);
 }
 
-export async function deleteTodoService(id) {
+export async function deleteTodoService(userId, id) {
     const collection = await getTodosCollection();
-    return await deleteTodoById(collection, new ObjectId(id));
+    return await deleteTodoById(collection, String(userId), new ObjectId(id));
 }
 
-export async function deleteTodosService(ids) {
+export async function deleteTodosService(userId, ids) {
     const collection = await getTodosCollection();
     const objectIds = ids.map(id => new ObjectId(id)); // Converts to ObjectId
-    return await deleteTodosByIds(collection, objectIds);
+    return await deleteTodosByIds(collection, String(userId), objectIds);
 }

@@ -1,12 +1,20 @@
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { connection } from "../config/db.js";
 import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
-import { createUser, findUserByEmailAndPassword } from "../models/userModel.js";
+import { createUser, findUserByEmail } from "../models/userModel.js";
 
 export async function loginUser(userData) {
     const db = await connection();
-    const result = await findUserByEmailAndPassword(db, userData);
-    return result;
+    const user = await findUserByEmail(db, userData.email);
+    if (!user) {
+        return null;
+    }
+    const isPasswordValid = await bcrypt.compare(userData.password, user.password);
+    if (!isPasswordValid) {
+        return null;
+    }
+    return user;
 }
 
 export function signAuthToken(payload, cb) {
@@ -15,7 +23,19 @@ export function signAuthToken(payload, cb) {
 
 export async function signupUser(userData) {
     const db = await connection();
-    const result = await createUser(db, userData);
+    const existingUser = await findUserByEmail(db, userData.email);
+    if (existingUser) {
+        throw new Error("User with this email already exists");
+    }
+    // Hash the password before storing
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+    // Replace plain password with hashed password
+    const userDataWithHashedPassword = {
+        ...userData,
+        password: hashedPassword
+    };
+    const result = await createUser(db, userDataWithHashedPassword);
     return result;
 }
 

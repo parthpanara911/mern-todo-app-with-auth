@@ -17,4 +17,3 @@ export const DB_NAME = process.env.DB_NAME || "todo_app";
 
 export const TODOS_COLLECTION = process.env.TODOS_COLLECTION || "todos";
 export const USERS_COLLECTION = process.env.USERS_COLLECTION || "users";
-

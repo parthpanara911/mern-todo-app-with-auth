@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/addtodo.css";
 import { todoApi } from "../services/api/todoApi.js";
@@ -6,6 +6,10 @@ import { todoApi } from "../services/api/todoApi.js";
 export default function AddTodo() {
   const [todoData, setTodoData] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Add Todo - Todo App";
+  }, []);
 
   const handleAddTodo = async () => {
     if (!todoData.title || !todoData.description) {
@@ -18,11 +22,11 @@ export default function AddTodo() {
       if (result.success) {
         navigate("/");
       } else {
-        alert("Try after sometime");
+        alert(result.error || "Failed to create todo");
       }
     } catch (error) {
       console.error("Add todo error:", error);
-      alert("Try after sometime");
+      alert("Failed to create todo");
     }
   };
 

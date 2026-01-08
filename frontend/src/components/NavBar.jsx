@@ -7,7 +7,7 @@ function NavBar() {
 
   return (
     <nav className="navbar">
-      <div className="logo">To Do App</div>
+      <div className="logo"><a href="/">To Do App</a></div>
       <ul className="nav-links">
         {isAuthenticated ? (
           <>

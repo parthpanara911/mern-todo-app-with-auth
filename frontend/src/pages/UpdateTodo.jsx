@@ -9,6 +9,10 @@ export default function UpdateTodo() {
   const { id } = useParams();
 
   useEffect(() => {
+    document.title = "Update Todo - Todo App";
+  }, []);
+
+  useEffect(() => {
     getTodo(id);
   }, [id]);
 
@@ -33,17 +37,16 @@ export default function UpdateTodo() {
     }
 
     try {
-      // Remove _id from payload as backend gets it from URL params
-      const { _id, ...updateData } = todoData;
+      const { _id, userId, createdAt, updatedAt, ...updateData } = todoData;
       const todo = await todoApi.update(id, updateData);
       if (todo.success) {
         navigate("/");
       } else {
-        alert(todo.error || "Try after sometime");
+        alert(todo.error || "Failed to update todo");
       }
     } catch (error) {
       console.error("Update todo error:", error);
-      alert("Try after sometime");
+      alert("Failed to update todo");
     }
   };
 

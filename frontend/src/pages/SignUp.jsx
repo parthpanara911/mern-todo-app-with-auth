@@ -10,6 +10,10 @@ export default function SignUp() {
   const { isAuthenticated, loginUser } = useAuth();
 
   useEffect(() => {
+    document.title = "Sign Up - Todo App";
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
     }
@@ -27,11 +31,11 @@ export default function SignUp() {
         loginUser(userData.email, result.token);
         navigate("/");
       } else {
-        alert(result.msg || "Try after sometime");
+        alert(result.msg || "Failed to create account");
       }
     } catch (error) {
       console.error("Signup error:", error);
-      alert("Try after sometime");
+      alert("Failed to create account");
     }
   };
 

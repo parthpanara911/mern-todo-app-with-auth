@@ -8,6 +8,10 @@ export default function List() {
   const [selectedTodo, setSelectedTodo] = useState([]);
 
   useEffect(() => {
+    document.title = "Todo List - Todo App";
+  }, []);
+
+  useEffect(() => {
     getListData(); // Called when component inserted into DOM 
   }, []);
 
