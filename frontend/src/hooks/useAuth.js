@@ -16,8 +16,7 @@ export const useAuth = () => {
     };
   }, []);
 
-  const loginUser = (email, token) => {
-    document.cookie = `token=${token}`; // Sets token in cookies
+  const loginUser = (email) => {
     localStorage.setItem("login", email); // Saves login state
     window.dispatchEvent(new Event("localStorage-change"));  // Notifies components
     setLogin(email); // Updates react state

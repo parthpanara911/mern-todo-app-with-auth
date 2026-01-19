@@ -5,6 +5,7 @@ export const authApi = {
         const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.LOGIN}`, {
             method: "POST",
             body: JSON.stringify(userData),
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -16,6 +17,7 @@ export const authApi = {
         const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.SIGNUP}`, {
             method: "POST",
             body: JSON.stringify(userData),
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },

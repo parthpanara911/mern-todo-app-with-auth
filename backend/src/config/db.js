@@ -9,5 +9,3 @@ export const connection = async () => {
     const connect = await client.connect();
     return await connect.db(DB_NAME);
 };
-
-

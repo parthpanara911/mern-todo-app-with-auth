@@ -38,5 +38,3 @@ export async function signupUser(userData) {
     const result = await createUser(db, userDataWithHashedPassword);
     return result;
 }
-
-
