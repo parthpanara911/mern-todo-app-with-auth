@@ -24,4 +24,20 @@ export const authApi = {
         });
         return await response.json();
     },
+
+    logout: async () => {
+        await fetch(`${API_BASE_URL}${API_ENDPOINTS.LOGOUT}`, {
+            method: "POST",
+            credentials: "include",
+        });
+    },
+
+    me: async () => {
+        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.ME}`, {
+            credentials: "include",
+        });
+
+        if (!response.ok) return null;
+        return response.json();
+    },
 };

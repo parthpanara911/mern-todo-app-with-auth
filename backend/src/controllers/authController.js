@@ -90,4 +90,24 @@ export async function signup(req, res) {
             msg: error.message || "Signup failed",
         });
     }
-} 
+}
+
+export function logout(req, res) {
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+    });
+
+    return res.status(200).json({
+        success: true,
+        msg: "Logged out successfully",
+    });
+}
+
+export function me(req, res) {
+    return res.status(200).json({
+        success: true,
+        user: req.user,
+    });
+}

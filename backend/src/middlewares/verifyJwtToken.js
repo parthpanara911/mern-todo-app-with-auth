@@ -3,7 +3,7 @@ import { JWT_SECRET } from "../config/env.js";
 
 export function verifyJwtToken(req, res, next) {
     //  console.log("verifyJWTToken ", req.cookies['token']);
-    const token = req.cookies["token"];
+    const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({
             success: false,
