@@ -18,7 +18,7 @@ export async function createTodoService(userId, payload) {
     const collection = await getTodosCollection();
     const todoWithUser = {
         ...payload,
-        userId: String(userId),
+        userId: new ObjectId(userId),
         createdAt: new Date(),
         updatedAt: new Date(),
     };
@@ -27,12 +27,12 @@ export async function createTodoService(userId, payload) {
 
 export async function getTodosService(userId) {
     const collection = await getTodosCollection();
-    return await listTodos(collection, String(userId));
+    return await listTodos(collection, new ObjectId(userId));
 }
 
 export async function getTodoService(userId, id) {
     const collection = await getTodosCollection();
-    return await findTodoById(collection, String(userId), new ObjectId(id));
+    return await findTodoById(collection, new ObjectId(userId), new ObjectId(id));
 }
 
 export async function updateTodoService(userId, id, payload) {
@@ -43,16 +43,16 @@ export async function updateTodoService(userId, id, payload) {
             updatedAt: new Date()
         }
     };
-    return await updateTodoById(collection, String(userId), new ObjectId(id), update);
+    return await updateTodoById(collection, new ObjectId(userId), new ObjectId(id), update);
 }
 
 export async function deleteTodoService(userId, id) {
     const collection = await getTodosCollection();
-    return await deleteTodoById(collection, String(userId), new ObjectId(id));
+    return await deleteTodoById(collection, new ObjectId(userId), new ObjectId(id));
 }
 
 export async function deleteTodosService(userId, ids) {
     const collection = await getTodosCollection();
     const objectIds = ids.map(id => new ObjectId(id)); // Converts to ObjectId
-    return await deleteTodosByIds(collection, String(userId), objectIds);
+    return await deleteTodosByIds(collection, new ObjectId(userId), objectIds);
 }

@@ -1,10 +1,16 @@
 import Joi from "joi";
+import AppError from "../utils/AppError.js";
 
-const todoSchema = Joi.object({
+const createTodoSchema = Joi.object({
     title: Joi.string().min(1).max(100).required(),
     description: Joi.string().max(500).optional(),
-    completed: Joi.boolean().optional(),
 });
+
+const updateTodoSchema = Joi.object({
+    title: Joi.string().min(1).max(100).optional(),
+    description: Joi.string().max(500).optional(),
+    completed: Joi.boolean().optional(),
+}).min(1);
 
 const userSchema = Joi.object({
     email: Joi.string().email().required(),
@@ -12,24 +18,37 @@ const userSchema = Joi.object({
     name: Joi.string().min(2).max(50).optional(),
 });
 
-export const validateTodo = (req, res, next) => {
-    const { error } = todoSchema.validate(req.body);
+export const validateCreateTodo = (req, res, next) => {
+    const { error, value } = createTodoSchema.validate(req.body, {
+        stripUnknown: true,
+        abortEarly: true,
+    });
     if (error) {
-        return res.status(400).json({
-            success: false,
-            error: error.details[0].message
-        });
+        throw new AppError(error.details[0].message, 400);
     }
+    req.body = value;
+    next();
+};
+
+export const validateUpdateTodo = (req, res, next) => {
+    const { error, value } = updateTodoSchema.validate(req.body, {
+        stripUnknown: true,
+        abortEarly: true,
+    });
+    if (error) {
+        throw new AppError(error.details[0].message, 400);
+    }
+    req.body = value;
     next();
 };
 
 export const validateUser = (req, res, next) => {
-    const { error } = userSchema.validate(req.body);
+    const { error } = userSchema.validate(req.body, {
+        abortEarly: true,
+        stripUnknown: true
+    });
     if (error) {
-        return res.status(400).json({
-            success: false,
-            error: error.details[0].message
-        });
+        throw new AppError(error.details[0].message, 400);
     }
     next();
 };

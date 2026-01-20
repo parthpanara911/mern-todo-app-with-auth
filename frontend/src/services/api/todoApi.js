@@ -31,7 +31,7 @@ export const todoApi = {
     const response = await fetch(
       `${API_BASE_URL}${API_ENDPOINTS.UPDATE(id)}`,
       {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify(todoData),
         credentials: "include",
         headers: {

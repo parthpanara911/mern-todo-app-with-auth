@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/login", validateUser, login);
 router.post("/signup", validateUser, signup);
-router.get("/me", verifyJwtToken, me);
 router.post("/logout", logout);
+router.get("/me", verifyJwtToken, me);
 
 export default router;

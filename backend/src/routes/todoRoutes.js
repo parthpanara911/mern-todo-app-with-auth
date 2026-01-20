@@ -8,15 +8,15 @@ import {
     deleteTodos,
 } from "../controllers/todoController.js";
 import { verifyJwtToken } from "../middlewares/verifyJwtToken.js";
-import { validateTodo } from "../middlewares/validate.js";
+import { validateCreateTodo, validateUpdateTodo } from "../middlewares/validate.js";
 
 const router = Router();
 
 router.get("/", verifyJwtToken, getTodos);
-router.post("/", verifyJwtToken, validateTodo, createTodo);
+router.post("/", verifyJwtToken, validateCreateTodo, createTodo);
 router.delete("/bulk", verifyJwtToken, deleteTodos);
 router.get("/:id", verifyJwtToken, getTodo);
-router.put("/:id", verifyJwtToken, validateTodo, updateTodo);
+router.patch("/:id", verifyJwtToken, validateUpdateTodo, updateTodo);
 router.delete("/:id", verifyJwtToken, deleteTodo);
 
 export default router;
